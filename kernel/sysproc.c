@@ -6,6 +6,8 @@
 #include "spinlock.h"
 #include "proc.h"
 
+#include "login.h"
+
 uint64
 sys_exit(void)
 {
@@ -90,4 +92,24 @@ sys_uptime(void)
   xticks = ticks;
   release(&tickslock);
   return xticks;
+}
+
+uint64
+sys_login(void) {  
+  char username[16];
+  char password[16];
+
+  if (argstr(0, username, sizeof(username)) < 0)
+    return -1;
+  if (argstr(1, password, sizeof(password)) < 0)
+    return -1;
+  
+  for (int i = 0; i < NUM_USERS; i++) {
+    if (strncmp(user_table[i].username, username, sizeof(username)) == 0 &&
+        strncmp(user_table[i].password, password, sizeof(password)) == 0) {
+          return 0;
+        }
+  }
+
+  return -1;
 }

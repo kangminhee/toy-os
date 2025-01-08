@@ -9,6 +9,9 @@
 #include "user/user.h"
 #include "kernel/fcntl.h"
 
+#include "kernel/login.h"
+#include "kernel/syscall.h"
+
 char *argv[] = { "sh", 0 };
 
 int
@@ -22,6 +25,26 @@ main(void)
   }
   dup(0);  // stdout
   dup(0);  // stderr
+  
+  char username[16];
+  char password[16];
+
+  while (1) {
+    printf("Username: ");
+    gets(username, sizeof(username));
+    username[strlen(username) - 1] = '\0';
+
+    printf("Password: ");
+    gets(password, sizeof(password));
+    password[strlen(password) - 1] = '\0';
+
+    if (login(username, password) == 0) {
+      printf("Hi! %s\n", username);
+      break;
+    } else {
+      printf("Login failed. Try again.\n");
+    }
+  }
 
   for(;;){
     printf("init: starting sh\n");

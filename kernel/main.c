@@ -10,6 +10,7 @@ volatile static int started = 0;
 void
 main()
 {
+  printf("xv6 kernel is starting...\n");
   if(cpuid() == 0){
     consoleinit();
     printfinit();
