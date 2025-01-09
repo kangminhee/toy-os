@@ -113,3 +113,13 @@ sys_login(void) {
 
   return -1;
 }
+
+uint
+sys_setmode(void) {
+  int m;
+  argint(0, &m);
+  
+  setmode(m);
+
+  return 0;
+}

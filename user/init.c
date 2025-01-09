@@ -35,14 +35,16 @@ main(void)
     username[strlen(username) - 1] = '\0';
 
     printf("Password: ");
+    setmode(1);
     gets(password, sizeof(password));
+    setmode(0);
     password[strlen(password) - 1] = '\0';
 
     if (login(username, password) == 0) {
-      printf("Hi! %s\n", username);
+      printf("\nHi! %s\n", username);
       break;
     } else {
-      printf("Login failed. Try again.\n");
+      printf("\nLogin failed. Try again.\n");
     }
   }
 

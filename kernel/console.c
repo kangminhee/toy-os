@@ -25,6 +25,8 @@
 #define BACKSPACE 0x100
 #define C(x)  ((x)-'@')  // Control-x
 
+int mode_p = 0;
+
 //
 // send one character to the uart.
 // called by printf(), and to echo input characters,
@@ -160,7 +162,7 @@ consoleintr(int c)
       c = (c == '\r') ? '\n' : c;
 
       // echo back to the user.
-      consputc(c);
+      if (!mode_p) consputc(c);
 
       // store for consumption by consoleread().
       cons.buf[cons.e++ % INPUT_BUF_SIZE] = c;
@@ -189,4 +191,10 @@ consoleinit(void)
   // to consoleread and consolewrite.
   devsw[CONSOLE].read = consoleread;
   devsw[CONSOLE].write = consolewrite;
+}
+
+void
+setmode(int m) {
+  if(m) mode_p = 1;
+  else mode_p = 0;
 }

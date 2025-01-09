@@ -23,6 +23,7 @@ char* sbrk(int);
 int sleep(int);
 int uptime(void);
 int login(const char*, const char*);
+int setmode(int);
 
 // ulib.c
 int stat(const char*, struct stat*);
