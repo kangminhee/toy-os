@@ -6,4 +6,3 @@ struct user user_table[] = {
 };
 
 const int NUM_USERS = sizeof(user_table) / sizeof(user_table[0]);
-
